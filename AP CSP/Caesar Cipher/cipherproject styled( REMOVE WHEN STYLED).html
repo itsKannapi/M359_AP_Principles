@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Caesar Cipher Project</title>
+    <style>
+        h1 {
+            text-align: center;
+            color: white;
+            font-family: 'Courier New', Courier, monospace
+        }
+        body{
+            text-align: center;
+            background: #006994;
+            font-family: Arial, Helvetica, sans-serif;
+            background-image: url("cipherbackground.jpg");
+            color: white;
+        }
+        .button{
+            background-color: #FFFFFF;
+            border: none;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        var mainKey;
+
+        //Description: Return a random interger, n, such that min <= n <= max
+        //Citation: Mozilla Foundation, https://developer.mozilla.org/en-US/docs/Web/Javascript/Reference/Global_Objects/Math/random
+            
+        //Input/Parameters: Two floating point numbers, min and max
+        //Output Return: Returns a random interger between mix and max
+        function randomInt(min, max){
+            min = Math.ceil(min);
+            max = Math.floor(max);
+
+            return Math.floor(Math.random() * (max - min + 1)) + min; //inclusive on min and max
+        }
+        function encryptInputText(){
+            manualKey()
+            var inputArray = document.getElementById("userinputId").value;
+            var selectedKey = mainKey;
+            console.log(mainKey)
+            console.log(selectedKey)
+            var stringLength = inputArray.length;
+            var convertedOutput = "";
+
+            for (var i = 0; i < stringLength; i++){
+                var invLetter = inputArray.charCodeAt(i);
+                
+                if (invLetter >= 97 && invLetter <= 122){
+                invLetter = String.fromCharCode(((invLetter - 97 + selectedKey) % 26) + 97);
+                convertedOutput += invLetter
+                }
+            }
+            console.log(inputArray)
+            console.log(convertedOutput)
+            document.getElementById("outputId").value = convertedOutput;
+            return convertedOutput
+        }
+
+        function decryptInputText(){
+            manualKey()
+            var inputArray = document.getElementById("userinputId").value;
+            var selectedKey = mainKey;
+            var stringLength = inputArray.length;
+            var convertedOutput = "";
+
+            for (var i = 0; i < stringLength; i++){
+                var invLetter = inputArray.charCodeAt(i);
+                
+                if (invLetter >= 97 && invLetter <= 122){
+                invLetter = String.fromCharCode(((invLetter - 123 - selectedKey) % 26) + 123);
+                convertedOutput += invLetter
+                }
+            }
+            console.log(inputArray)
+            console.log(convertedOutput)
+
+            document.getElementById("outputId").value = convertedOutput;
+            return convertedOutput
+        }
+        function randomKey(){
+            var randomValue;
+            randomValue = randomInt(1,26);
+
+            var randomForceKey = document.getElementById("idSelectBox").selectedIndex = randomValue;
+
+            randomValue = mainKey;
+            document.getElementById()
+        }
+
+        function manualKey(){
+            var selectedValue = document.getElementById("idSelectBox").value;
+        
+            if (selectedValue == "1"){
+                mainKey = 1;
+            }
+            if (selectedValue == "2"){
+                mainKey = 2;
+            }
+            if (selectedValue == "3"){
+                mainKey = 3;
+            }
+            if (selectedValue == "4"){
+                mainKey = 4;
+            }
+            if (selectedValue == "5"){
+                mainKey = 5;
+            }
+            if (selectedValue == "6"){
+                mainKey = 6;
+            }
+            if (selectedValue == "7"){
+                mainKey = 7;
+            }
+            if (selectedValue == "8"){
+                mainKey = 8;
+            }
+            if (selectedValue == "9"){
+                mainKey = 9;
+            }
+            if (selectedValue == "10"){
+                mainKey = 9;
+            }
+            if (selectedValue == "8"){
+                mainKey = 10;
+            }
+            if (selectedValue == "11"){
+                mainKey = 11;
+            }
+            if (selectedValue == "12"){
+                mainKey = 12;
+            }
+            if (selectedValue == "13"){
+                mainKey = 13;
+            }
+            if (selectedValue == "14"){
+                mainKey = 14;
+            }
+            if (selectedValue == "15"){
+                mainKey = 15;
+            }
+            if (selectedValue == "16"){
+                mainKey = 16;
+            }
+            if (selectedValue == "17"){
+                mainKey = 17;
+            }
+            if (selectedValue == "18"){
+                mainKey = 18;
+            }
+            if (selectedValue == "19"){
+                mainKey = 19;
+            }
+            if (selectedValue == "20"){
+                mainKey = 20;
+            }
+            if (selectedValue == "21"){
+                mainKey = 21;
+            }
+            if (selectedValue == "22"){
+                mainKey = 22;
+            }
+            if (selectedValue == "23"){
+                mainKey = 23;
+            }
+            if (selectedValue == "24"){
+                mainKey = 24;
+            }
+            if (selectedValue == "25"){
+                mainKey = 25;
+            }
+            if (selectedValue == "26"){
+                mainKey = 26;
+            }
+        }
+        function showInstructions(){
+            var instructions;
+
+            instructions += "Insert your plain or cipher text into the small white box"
+            instructions += "Press the encrypt key if you want to change the text from plain"
+            instructions += "to cipher text. Or use Decrypt key if you want to change the text"
+            instructions += "from cipher text to plain text. Then use the Key in the drop down"
+            instructions += "menu "
+            
+        }
+    </script>
+        
+    </head>
+    <body>
+        <h1>Caesar Cipher Project</h1>
+        <br><br>
+        <input type ="text" id="userinputId" size="60" style="height: 50px; width: 100;">
+        <br><br>
+        Key: <select id = "idSelectBox">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+            <option>13</option>
+            <option>14</option>
+            <option>15</option>
+            <option>16</option>
+            <option>17</option>
+            <option>18</option>
+            <option>19</option>
+            <option>20</option>
+            <option>21</option>
+            <option>22</option>
+            <option>23</option>
+            <option>24</option>
+            <option>25</option>
+        </select>
+        <br><br>
+        <div><input type = "button";  class="button" value= "Encrypt" onClick=encryptInputText()>
+        <input type = "button"; class="button" value= "Decrypt" onClick=decryptInputText()></div>
+        <br><br>
+        <div><input type = "button"; class="button" value= "Pick Random Key" onClick=randomKey()>
+        <input type = "button"; class="button" value= "Instructions" onClick=showInstructions()></div>
+        <br><br><br>
+        <input type ="text" id="outputId" size="60" style="height: 50px; width: 150;">
+        
+
+
+    </body>
+
+</html>

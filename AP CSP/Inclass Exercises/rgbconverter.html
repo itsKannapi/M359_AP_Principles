@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        h1{
+            text-align: center;
+        }
+        
+        body{
+            text-align: center;
+        }
+    </style>
+    <script>
+
+
+
+        function decToHexi(decimalNumber){
+            var hexiAnswer = "";
+
+            console.log(decimalNumber)
+            if(decimalNumber == 0){
+                hexiAnswer = "00"
+            }
+            while(decimalNumber > 0){
+                var remainder = decimalNumber % 16;
+
+                if (remainder == 10){
+                remainder = "A";
+                }
+                else if (remainder == 11){
+                    remainder = "B";
+                }
+                else if (remainder == 12){
+                    remainder = "C";
+                }
+                else if (remainder== 13){
+                    remainder = "D";
+                }
+                else if (remainder == 14){
+                    remainder = "E";
+                }
+                else if (remainder == 15){
+                    remainder = "F";
+                }
+               
+                hexiAnswer += remainder
+                decimalNumber = Math.floor(decimalNumber/16)
+            }
+                if(hexiAnswer.length < 2){
+                    hexiAnswer = "0" + remainder;
+                }
+
+                return hexiAnswer
+            }
+        
+        function getHex(red, green, blue){
+            var redHexValue = decToHexi(red);
+            var blueHexValue = decToHexi(blue);
+            var greenHexValue = decToHexi(green);
+
+            var hexString = redHexValue + greenHexValue + blueHexValue;
+            var rgbString = "(" + red + "," + green + "," + blue + ")";
+
+            document.getElementById('resultsId').innerHTML = "The RGB value of this color is " + rgbString + " and the hex-value of this color is #" + hexString;
+        }
+        function results(){
+            var redValue = document.getElementById("redInputId").value;
+            var greenValue = document.getElementById("greenInputId").value;
+            var blueValue = document.getElementById("blueInputId").value;
+
+            var rgbString = "rgb(" + redValue + "," + greenValue + "," + blueValue + ")";
+            
+            getHex(redValue, greenValue, blueValue);
+            document.body.style.backgroundColor = rgbString;
+        }
+    </script>
+    <body>
+    <h1>Convert Integers to RGB</h1>
+
+    Red Value (0-255): <input type ="text" id="redInputId" placeholder="">
+    <br><br>
+    Green Value (0-255): <input type ="text" id="greenInputId" placeholder="">
+    <br><br>
+    Blue Value (0-255): <input type ="text" id="blueInputId" placeholder="">
+    <br><br>
+    <input type = "button" value = "Convert" onclick="results()">
+    <br><br>
+
+    <div id= 'resultsId'></div>
+    </body>
+</html>

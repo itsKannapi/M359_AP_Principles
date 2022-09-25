@@ -1,0 +1,129 @@
+<html>
+ <head>
+     <title>Letter to Santa </title>
+     <style>
+        h1{
+            text-align: center;
+        }
+        body{
+            border: 5px solid rgb(255, 255, 255);
+            border-style: dashed;
+            text-align: center;
+            color: white;
+            background: #ff0000;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+     </style>
+        <script>
+            var customName = "";
+            var customList = [];
+            var randomPresents = ["PlayStation 5", "Xbox One Series X", "IBuyPower Gaming Computer", "Asus Gaming Laptop",
+                                "Apple Airpods Pro", "Apple Ipad Pro","Gaming Chair","Bauer Supreme Hockey Stick",
+                                "$100 Steam Giftcard", "27' Inch Alienware Monitor", "NanoLeaf Light Panels", "$100 Foot Locker Gift Card"];                    function randomInt(min, max){
+                min = Math.ceil(min);
+                max = Math.floor(max);
+
+                return Math.floor(Math.random() * (max - min + 1)) + min; //inclusive on min and max
+            }
+            function generateRandomPresentList(numPresents, inputPresents){
+                var randomSubset = [];
+
+                while(randomSubset.length < numPresents){
+                    var index = randomInt(0, inputPresents.length - 1)
+                    var elemPresents = inputPresents[index];
+
+                    if (randomSubset.includes(elemPresents)== false){
+                        randomSubset.push(elemPresents)
+                    }
+                }
+                return randomSubset;   
+            }
+            function formatList(array){
+                var output = "";
+                console.log(array)
+                for (var i = 0; i < array.length; i++){
+                    output +=  array[i] + "<br>";
+                }
+                console.log(output)
+                return output;
+            }
+            function composeLetter(childName, presentArray){
+                var status;
+                if (presentArray.length > 5){
+                    var status = "naughty";
+                    
+                    var randomIndex = randomInt(0, randomPresents.length - 1);
+
+                    presentArray[randomIndex] = "Lump of Coal"
+                }
+                else {
+                    status = "nice"
+                }
+                var letterContents = "Dear Santa, <br>"
+                letterContents += "i hope you are having a jolly year! I would like the following this year: <br><br>"
+                letterContents += formatList(presentArray) + "<br><br>"
+                letterContents += "Since this year I was " + status + ". I look forward to recieving all of my desired items! Thank You! <br>";
+                letterContents += "Sincerely, " + childName;
+
+                //insert concantenation
+                return letterContents;
+            }
+            function getLetter(){
+                var selectedValue = document.getElementById("idSelectBox").value;
+                var presents;
+                var presentIndex;
+                var letter;
+
+                if (selectedValue == "Suzy"){
+                    presents = generateRandomPresentList(4, randomPresents)
+                    console.log(presents)
+                }
+                else if (selectedValue == "Sanjay"){
+                    presents = generateRandomPresentList(2, randomPresents)
+                    console.log(presents)
+                }
+                else if (selectedValue == "Nick"){
+                    presents = generateRandomPresentList(8, randomPresents)
+                    console.log(presents)
+                }
+
+                letter = composeLetter(selectedValue, presents);
+                console.log(letter)
+                document.getElementById('idDivLetter').innerHTML = letter;
+           }
+           function saveName(){
+            customName = document.getElementById("idName").value
+            document.getElementById("idCustomNameContainer").innerHTML = customName;
+           }
+           function saveItem (){
+            var textBoxItem = document
+           }
+        </script>
+ </head>
+ <body>
+    <h1>Letter to Santa!!</h1>
+    <br><br>
+    <img src="christmas2021.jpg" alt="christmas photos" width="400" height="300" style="vertical-align:middle;margin:0px 265px">
+    <br><br>
+    Use the Dropdown menu to select which letter to Santa you'd like to generate
+    <br><br>
+    Suzy always asks for 4 random presents. Sanjay always ask for 2 random<br>
+    presents, and Nick always asks for 8 random presents. You can also generate your<br>
+    own custom letter to Santa, but be careful! Anyone who asks for more than 5<br>
+    presents will be classified as "naughty" and will have one of their presents<br>
+    replaced with a lump of coal!
+    <br><br>
+    <select id = "idSelectBox">
+        <option>Suzy</option>
+        <option>Sanjay</option>
+        <option>Nick</option>
+        <option>Custom</option>
+    <br><br>
+    <div><Input type = "button" value = "Create Letter" onClick=getLetter()></div>
+    <br><br>
+    <div id = "idDivLetter"></div>
+
+    <div id = "idDivCustomOutputs"></div>
+ </body>
+</html>

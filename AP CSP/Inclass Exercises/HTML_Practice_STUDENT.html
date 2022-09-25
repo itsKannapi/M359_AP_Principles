@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <title>HTML Practice</title>
+        <style>
+            body{
+                background-color: #F6D55C;
+                color: #20639B;
+                text-align: center;
+                border: #ED553B;
+                border-style:ridge;
+                border-width: 5px;
+                padding-top: 10px;
+            }
+            p{
+                color: #3CAEA3;
+                font-size: 20px;
+            }
+            div{
+                color: #173F5F;
+                font-size: 25px;
+            }
+            span{
+                color: #ED553B;
+                font-size: 25px;
+            }
+            .first{
+                color: red;
+            }
+
+            /* Add a customized color to for the .second class */
+            .second{
+                color: blue
+            }
+            /* Add a customized color to for the .third class */
+            .third{
+                color: green
+            }
+            custom1{
+                color: brown;
+            }
+
+            /* Add a customized color to for the <custom2> tag */
+
+        </style>
+        <script>
+            function changeContainer(){
+                var nameTextBox = "<input type='textbox' placeholder='Favorite Color' id='idTxtColor'>";
+                var spanTag = "<span id='idSpan'></span>";
+                var button1 = "<input type='button' value='Display Favorite Color' onClick='colorSentence()'>";
+                var button2 = "<input type='button' value='Hide Textbox/Button/Span' onClick='hideHTML()'>";
+                
+                // Change the innerHTML of the "idDivButtonContainer" to contain the nameTextBox, spanTag, button1, and button2
+                // Each should have a <br> inserted between them
+                idDivButtonContainer.innerHTML = nameTextBox + "<br>" + spanTag + "<br>" + button1 + "<br>" + button2
+            }
+
+            function colorSentence(){
+                var favColor = idTxtColor.value;
+                var sentence = "Your favorite color is: " + favColor;
+                idSpan.innerHTML = sentence;
+            }
+
+            function hideHTML(){
+                // Create a variable name originalButton that contains HTML code for a button
+                // Button value is 'Change <div> Container', when clicked run 'changeContainer()'
+                // Insert code for button in the innerHTML of "idDivButtonContainer"
+            }
+        </script>
+    </head>
+    <body>
+        <h1 id="idHeader">&lt;div&gt; Tags vs &lt;span&gt Tags</h1>
+        <!-- Add a <custom2> tag that surrounds "span" below  -->
+        <p>Below are examples of how <custom1>div</custom1> tags work compared to span tags</p>
+        <!-- Add a class="second" attribute to the second <div> below -->
+        <!-- Add a class="third" attribute to the third <div> below -->
+        <div id="idDiv1" class="first">Divider #1</div>
+        <div id="idDiv2">Divider #2</div>
+        <div id="idDiv3">Divider #3</div>
+        <br><br>
+        <!-- Add a different class attribute to each <span> below -->
+        <span id="idSpan1" class="first">Span #1</span>
+        <span id="idSpan2" class="second">Span #2</span>
+        <span id="idSpan3" class="third">Span #3</span>
+        <br><br>
+        <!-- Insert code for a button in the innerHTML of the <div> below -->
+        <!-- Button value is "Change <div> Container", when clicked run changeContainer() function -->
+        <div id="idDivButtonContainer"> <Input type = "button" value = "span/div" onClick="changeContainer()"></div>
+
+
+    </body>
+</html>

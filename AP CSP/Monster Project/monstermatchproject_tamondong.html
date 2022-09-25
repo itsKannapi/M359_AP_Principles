@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Monster Match </title>
+
+	<style>
+		body {
+			text-align: center;
+			background: linear-gradient(90deg, rgb(255, 255, 255) -30%, rgb(255, 115, 0) 50%, rgb(255, 255, 255) 130%);
+			border: 5px solid white;
+		}
+	</style>
+
+	<script>
+		
+		// initialize global variables here
+		var gameState ="game over";
+
+		var cardsPerdeck = 8;
+
+		var player1DeckArray;
+
+		var player2DeckArray;
+
+		var currentIndex1;
+
+		var currentIndex2;
+
+		var player1Card;
+
+		var player2Card;
+
+		var imageArray = ["monster1.svg", "monster2.svg", "monster3.svg", "monster4.svg"];
+
+		//image file for the currentindex (player1DeckArray[currentIndex])
+		
+
+		//Description: Return a random interger, n, such that min <= n <= max
+        //Citation: Mozilla Foundation, https://developer.mozilla.org/en-US/docs/Web/Javascript/Reference/Global_Objects/Math/random
+            
+        //Input/Parameters: Two floating point numbers, min and max
+        //Output Return: Returns a random interger between mix and max
+        function randomInt(min, max){
+            min = Math.ceil(min);
+            max = Math.floor(max);
+
+            return Math.floor(Math.random() * (max - min + 1)) + min; //inclusive on min and max
+        }
+
+		function displayRandomCard(){
+
+		}
+		// write a formatImage function based on your Marvel project
+		function formatImage(inputArray, index){
+			var fileName = inputArray[index];
+
+            var output = "<img src='monsters/" + fileName + "' width=200 height=300>";
+            return output;
+		}
+		// this function starts a new game of Monster Match
+		function startNewGame(){
+			document.getElementById('gameMessageId').innerHTML = "";
+			gameState = "play";
+			player1DeckArray = [];
+			player2DeckArray = [];
+			for (var i = 0; i < cardsPerdeck; i++){
+				var index = i % 4;
+				player1DeckArray.push(imageArray[index]);
+				player2DeckArray.push(imageArray[index]);
+			}
+			console.log(player1DeckArray);
+			var curCard1 = formatImage(player1DeckArray, 3);
+
+			var curCard2 = formatImage(player2DeckArray, 3);
+			
+			dealNewCards();
+		}
+		
+		function updateCounters(){
+			document.getElementById("p1CountId").innerHTML = "Cards Left: " + player1DeckArray.length;
+			
+			document.getElementById("p2CountId").innerHTML = "Cards Left: " + player2DeckArray.length;
+		}
+
+		function dealNewCards(){
+			// update the currently-selected index for each deck of cards to an (appropriate) random value
+			currentIndex1 = randomInt(0, player1DeckArray.length - 1);
+			currentIndex2 = randomInt(0, player2DeckArray.length - 1);
+			// update the currently-selected card for each player
+			player1Card = player1DeckArray[currentIndex1];
+			player2Card = player2DeckArray[currentIndex2];
+			// update the displayed images
+			var player1PicCode = formatImage(player1DeckArray, currentIndex1);
+			var player2PicCode = formatImage(player2DeckArray, currentIndex2);
+			
+			document.getElementById("image1Id").innerHTML = player1PicCode;
+			document.getElementById("image2Id").innerHTML = player2PicCode;
+			// call the function that updates the card count
+			updateCounters();
+		}
+		
+		function checkForWins(){
+			// if Player 2's deck has no cards in it:
+			if (player1DeckArray.length == 0){
+				document.getElementById("gameMessageId").innerHTML = "Player 1 has won this game! Player 2 has no more cards!"
+				gameState = "gameOver";
+			}
+			// 1) tell the user that Player 1 has won
+			// 2) set the game state to "game over"
+			if (player2DeckArray.length == 0){
+				document.getElementById("gameMessageId").innerHTML = "Player 2 has won this game! Player 1 has no more cards!"
+				gameState = "gameOver";
+			}
+		}
+
+		function checkMatch(event){
+			var curKey = event.key;
+			if(gameState == "play"){
+				if (curKey == "a"){
+					if (player1Card == player2Card){
+						document.getElementById("gameMessageId").innerHTML = "Player 1 has claimed the match<br>Press \"n\" to deal the next card!";
+						player1DeckArray.push(player2DeckArray[currentIndex2]);
+						player2DeckArray.splice(player2Index, 1);
+					}
+
+					else{
+						document.getElementById("gameMessageId").innerHTML = "Player 1 misfires, and gives up their card!";
+						player2DeckArray.push(player1DeckArray[currentIndex1]);
+						player1DeckArray.splice(currentIndex1, 1);
+					}
+					gameState = "pause";  
+					updateCounters();
+					checkForWins();
+				}
+				else if (curKey == "l"){
+					if (player2Card == player1Card){
+						document.getElementById("gameMessageId").innerHTML = "Player 2 has claimed the match<br>Press \"n\" to deal the next card!";
+						player2DeckArray.push(player1DeckArray[currentIndex1]);
+						player1DeckArray.splice(currentIndex1, 1);
+					}
+
+					else{
+						document.getElementById("gameMessageId").innerHTML = "Player 2 misfires, and gives up their card!";
+						player1DeckArray.push(player2DeckArray[currentIndex2]);
+						player2DeckArray.splice(currentIndex2, 1);
+					}
+					gameState = "pause";
+					updateCounters();
+					checkForWins();
+				}
+				else if (curKey == "n"){
+					if (player1Card == player2Card){
+						document.getElementById("gameMessageId").innerHTML = "Is there an unclaimed match on the board still.....?";
+						gameState = "play";
+					}
+					else{
+						dealNewCards();
+						document.getElementById("gameMessageId").innerHTML = "";
+						gameState = "play";
+					}
+				}
+			}
+			
+			else if (gameState == "pause"){
+				if (curKey == "n"){
+					dealNewCards();
+					document.getElementById("gameMessageId").innerHTML = "";
+					gameState = "play";
+				}
+			}	
+		}
+		function showInstructions(){
+			var instructions;
+			instructions = "<br> <br> Each player has a deck of monster cards. Each round, a <br>";
+			instructions += "player will reveal a random card from their deck. If the <br>";
+			instructions += "cards match, it is a \"monster match.\" The fastest player <br>";
+			instructions += "can claim the other player's card (it is removed from the <br>";
+			instructions += "deck of the slower player's deck and added to the faster <br>";
+			instructions += "player's deck). Player 1 can claim a match by pressing \"a\" <br>";
+			instructions += "before player 2 can claim the match by pressing \"I.\" If a <br>";
+			instructions += "player presses \"a\" or \"I\" when there is not a match, they <br>";
+			instructions += "will give up their card. If the cards don't match, press \"N\" <br>";
+			instructions += "to start the next round. When a player has claimed all the <br>";
+			instructions += "other player's cards, that player wins the game.";
+
+
+			document.getElementById("displayInstructions").innerHTML = instructions;
+		}
+	</script>
+</head>
+    <body onKeyUp="checkMatch(event)">
+        <h1>Monster Match</h1>
+
+        <input type = "button" value="Start New Game:" onclick= "startNewGame()">
+		<input type = "button" value="Show Instructions" onclick= "showInstructions()">
+
+		<div id="displayInstructions"></div>
+		
+		<table style = "margin-left:auto;margin-right:auto;">
+			<tr>
+				<th><span id="player1Id"></span></th>
+				<br> 
+				<th><span id="player2Id"></span></th>
+			</tr>
+			<tr>
+				<th><span id="image1Id"></span></th>
+				<th><span id="image2Id"></span></th>
+			</tr>
+			<tr>
+				<th><span id="p1CountId"></span></th>
+				<th><span id="p2CountId"></span></th>
+			</tr>
+		</table>
+
+		<div id="gameMessageId"></div>
+    </body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+            <title>
+                    Prime SteakHouse
+            </title>
+            <style>
+                body{
+                    background: #0156a5;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+                h1, h2, h3 {
+                    text-align: center;
+                }
+                p {
+                    text-align: center;
+                    color:rgb(255, 255, 255);
+                }
+
+                table, td, th {
+                    text-align: left;
+                    width: 40%;
+                    border: 3px solid rgb(0, 0, 0);
+                    border-collapse: collapse;
+                }
+            </style>
+
+            <script>
+                var selectedAppetizer = 'none';
+                var selectedMainCourse = 'none';
+                var selectedBeverage = 'none';
+                
+                //this function sets the food picture as the selected item in the drop down menu
+                function selectItem(foodType){
+                    var img = '';
+                    if(foodType == 'appetizer'){
+                        var dropdown = document.getElementById('appetizerId');
+                        selectedAppetizer = dropdown.options[dropdown.selectedIndex].value;
+
+                            if (selectedAppetizer == 'appOne'){
+                                //Author/Description: Chopped Salad by Lakeshore Lady
+                                //Source: https://www.lakeshorelady.com/wp-content/uploads/2017/08/Portillos-Chopped-Salad-12-720x720.jpg
+                                img = '<img src= "images/appOnePic.jpg" width="150" height="100">';
+                            }
+                            else if (selectedAppetizer == 'appTwo'){
+                                //Author/Description: Honey BBQ Wings on Buzzfeed
+                                //Source: https://img.buzzfeed.com/thumbnailer-prod-us-east-1/4c41b09cf41644a7b7ca1780edbeb960/BFV8354_Honey_BBQ_Chicken_Wings-FB1080.jpg
+                                img = '<img src= "images/appTwoPic.jpg" width="150" height="100">';
+                            }
+                            else if (selectedAppetizer == 'appThree'){
+                                //Author/Description: Onion Rings on Mashed
+                                //Source: https://www.mashed.com/img/gallery/the-untold-truth-of-onion-rings/l-intro-1612371548.jpg
+                                img = '<img src= "images/appThreePic.jpg" width="150" height="100">';
+                            }
+                            document.getElementById('appPicId').innerHTML = img;
+                    }
+                    if(foodType == 'mainCourse'){
+                        var dropdown = document.getElementById('mainId');
+                        selectedMainCourse = dropdown.options[dropdown.selectedIndex].value;
+
+                            if (selectedMainCourse == 'mainOne'){
+                                //Author/Description:T-Bone Steak on thespruceeats
+                                //Source: https://www.thespruceeats.com/thmb/fFfNiabXmMG4ICXje9j2hPxyNa4=/2667x2000/smart/filters:no_upscale()/grilled-t-bone-steak-and-mushrooms-recipe-336279-4ffcefb8ac564281921d2f3980909e01.jpg
+                                img = '<img src= "images/mainOnePic.jpg" width="150" height="100">';
+                            }
+                            else if (selectedMainCourse == 'mainTwo'){
+                                //Author/Description: BBQ Ribs by Charboil
+                                //Source: https://www.charbroil.com/media/ctm//a/p/apple_butter_bbq_ribs.jpg.jpeg
+                                img = '<img src= "images/mainTwoPic.jpg" width="150" height="100">';
+                            }
+                            else if (selectedMainCourse == 'mainThree'){
+                                //Author/Description: Filet Mignon by Hearstapps
+                                //Source: https://hips.hearstapps.com/hmg-prod/images/delish-filet-mignon-horizontal-1541189043.jpeg
+                                img = '<img src= "images/mainThreePic.jpg" width="150" height="100">';
+                            }
+                            document.getElementById('mainPicId').innerHTML = img;
+                    }
+                    if(foodType == 'beverage'){
+                        var dropdown = document.getElementById('beverageId');
+                        selectedBeverage = dropdown.options[dropdown.selectedIndex].value;
+
+                            if (selectedBeverage == 'bevOne'){
+                                //Author/Description: Pack of Sodas by Adobe Stock
+                                //Source:https://s3-assets.eastidahonews.com/wp-content/uploads/2019/10/30061728/AdobeStock_279692163_Editorial_Use_Only-860x533.jpeg
+                                img = '<img src= "images/bevOnePic.jpg" width="150" height="100">';
+                            }
+                            else if (selectedBeverage == 'bevTwo'){
+                                //Author/Description: Bottled Water on Office Depot
+                                //Source:https://media.officedepot.com/image/upload/b_rgb:FFFFFF,c_pad,dpr_1.0,f_auto,h_666,q_auto,w_500/c_pad,h_666,w_500/v1/products/620007/620007_o02_031121?pgw=1
+                                img = '<img src= "images/bevTwoPic.jpg" width="150" height="100">';
+                            }
+                            else if (selectedBeverage == 'bevThree'){
+                                //Author/Description: Mango Smoothie on dinneratthezoo
+                                //Source: https://www.dinneratthezoo.com/wp-content/uploads/2018/05/mango-smoothie-2.jpg
+                                img = '<img src= "images/bevThreePic.jpg" width="150" height="100">';
+                            }
+                            document.getElementById('bevPicId').innerHTML = img;
+                        }
+                        var appPriceFloat, bevPriceFloat, mainPriceFloat, subTotalFloat;
+                }
+                //this function submits our order and giving a text indocating that when we select the button
+                function submitOrder(){
+                    var name = document.getElementById('nameId').value;
+                    var phone = document.getElementById('phoneId').value;
+                    var tip = document.getElementById('tipId').value;
+
+                    var isChecked = document.getElementById('checkId').checked;
+                    var textAlertsMessage;
+
+                    if (isChecked){
+                        textAlertsMessage = "We will text you when your order is ready.";
+                    }
+                    else{
+                        textAlertsMessage = "You have opted out of text alerts. Orders";
+                        textAlertsMessage += "are usually read for pickup in 30 minutes";
+                    }
+                    textAlertsMessage += "Please pay for your order in store."
+
+                    calculateSubtotal();
+                    tipPercent = parseFloat(tip);
+                    var tipAmount = subTotalFloat*(tip/100);
+                    var totalFloat = subTotalFloat + tipAmount;
+
+                    var orderSummary = "";
+                    orderSummary += "Customer Name: " + name + "<br>";
+                    orderSummary += "Customer Phone: " + phone + "<br>";
+                    orderSummary += "Appetizer: $" + appPriceFloat.toFixed(2) + "<br>";
+                    orderSummary += "Main Course: $" + mainPriceFloat.toFixed(2) + "<br>";
+                    orderSummary += "Beverage: $" + bevPriceFloat.toFixed(2) + "<br>";
+                    orderSummary += "Sub Total: $" + subTotalFloat.toFixed(2) + "<br>";
+                    orderSummary += "Tip Amount: $" + tipAmount.toFixed(2) + "<br>";
+                    orderSummary += "Total: $"+ totalFloat.toFixed(2) + "<br>";
+                    
+                    document.getElementById('orderSummaryId').innerHTML = orderSummary;
+                }
+
+                function calculateSubtotal(){
+                    if(selectedAppetizer == 'none'){
+                        appPriceFloat = 0;
+                    }
+                    else if(selectedAppetizer == 'appOne'){
+                        appPriceFloat = 5;
+                    }
+                    else if (selectedAppetizer == 'appTwo'){
+                        appPriceFloat = 5;
+                    }
+                    else if (selectedAppetizer == 'appThree'){
+                        appPriceFloat = 6;
+                    }
+
+                    if(selectedMainCourse == 'none'){
+                        mainPriceFloat = 0;
+                    }
+                    else if(selectedMainCourse == 'mainOne'){
+                        mainPriceFloat = 14;
+                    }
+                    else if (selectedMainCourse == 'mainTwo'){
+                        mainPriceFloat = 15;
+                    }
+                    else if (selectedMainCourse == 'mainThree'){
+                        mainPriceFloat = 16;
+                    }
+
+                    if(selectedBeverage == 'none'){
+                        bevPriceFloat = 0;
+                    }
+                    else if(selectedBeverage == 'bevOne'){
+                        bevPriceFloat = 4.25;
+                    }
+                    else if (selectedBeverage == 'bevTwo'){
+                        bevPriceFloat = 1;
+                    }
+                    else if (selectedBeverage == 'bevThree'){
+                        bevPriceFloat = 6.25;
+                    }
+
+                    subTotalFloat = appPriceFloat;
+                    subTotalFloat += mainPriceFloat;
+                    subTotalFloat += bevPriceFloat;
+                }
+            </script>
+
+             
+    </head>
+    <body>
+        <h1> Prime SteakHouse</h1>
+        <h2> Dinner Menu </h2>
+        <p>Pick an appetizer, main course, and beverage:</p>
+        <br>
+            Appetizer:
+            <select id="appetizerId" onChange="selectItem('appetizer')">
+                <option value="none">None, Price: N/A</option>
+                <option value="appOne">Chopped Salad, Price: $5.00</option>
+                <option value="appTwo">BBQ Wings, Price: $5.00</option>
+                <option value="appThree">Onion Rings, Price $6.00</option>
+            </select>
+            <div id="appPicId"></div> 
+            <br>
+
+            Main Course:
+            <select id="mainId" onChange="selectItem('mainCourse')">
+                <option value="none">None, Price: N/A</option>
+                <option value="mainOne">T-Bone Steak, Price: $14.00</option>
+                <option value="mainTwo">BBQ Ribs 12 Bone, Price: $15.00</option>
+                <option value="mainThree">Filet Mignon, Price $16.00</option>
+            </select>
+            <div id="mainPicId"></div> 
+            <br>
+
+            Beverage:
+            <select id="beverageId" onChange="selectItem('beverage')">
+                <option value="none">None, Price: N/A</option>
+                <option value="bevOne">Soda (Pepsi, Sprite, Coca-Cola), Price: $4.25</option>
+                <option value="bevTwo">Bottled Water, Price: $1.00</option>
+                <option value="bevThree">Mango Smoothie, Price: $6.25</option>
+            </select>
+            <div id="bevPicId"></div> 
+            <br>
+
+            Name: <input type="text" id="nameId" placeholder="Full Name">
+            Mobile Number: <input type="text" id="phoneId" placeholder="Mobile Phone">
+            <br> <br>
+            Check if you would like text alerts about your order: <input type="checkbox" id="checkId">
+            <br> <br>
+            Tip %: <input type="text" id="tipId" placeholder="Enter a percentage Between 0 and 100" size = "58">
+            <br> <br>
+            <input type="button" value="Submit Order" onClick= submitOrder()>
+            <br>
+            <div id='orderSummaryId'></div>
+    </body>
+</html>

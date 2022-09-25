@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        
+    <style>
+        h1{
+            text-align: center;
+            
+        }
+        body {
+            border: 5px solid white;
+            text-align: center;
+			background-color: rgb(110, 110, 110);
+			font-family: "Arial Black", Gadget, sans-serif;
+        }
+
+    </style>
+    <script>
+        var decimalAnswer;
+
+        function binaryToDecimal(binaryNumber){
+            decimalAnswer = 0;
+
+            var binaryString = String(binaryNumber);
+            var binaryArray = binaryNumber.split("");
+            binaryArray.reverse();
+
+            for(var i = 0; i < binaryArray.length; i++){
+                var digit = Number(binaryArray[i]);
+                decimalAnswer += digit*(2**i)
+            }
+            return decimalAnswer
+        }
+        function octToDecimal(octNumber){
+            decimalAnswer = 0;
+
+            var octString = String(octNumber);
+            var octArray = octNumber.split("");
+            octArray.reverse();
+
+            for(var i = 0; i < octArray.length; i++){
+                var digit = Number(octArray[i]);
+                decimalAnswer += digit*(8**i)
+            }
+            return decimalAnswer
+        }
+        function deciToDecimal(deciNumber){
+            decimalAnswer = 0;
+
+            var deciString = String(deciNumber);
+            var deciArray = deciNumber.split("");
+            deciArray.reverse();
+
+            for(var i = 0; i < deciArray.length; i++){
+                var digit = Number(deciArray[i]);
+                decimalAnswer += digit*(9**i)
+            }
+            return decimalAnswer
+        }
+        function hexiToDecimal(heciNumber){
+            decimalAnswer = 0;
+
+            var heciString = String(heciNumber);
+            var heciArray = heciNumber.split("");
+            heciArray.reverse();
+
+            for(var i = 0; i < heciArray.length; i++){
+                var digit = (heciArray[i]);
+                if (digit == "A"){
+                    digit = 10;
+                }
+                else if (digit == "B"){
+                    digit = 11;
+                }
+                else if (digit == "C"){
+                    digit = 12;
+                }
+                else if (digit == "D"){
+                    digit = 13;
+                }
+                else if (digit == "E"){
+                    digit = 14;
+                }
+                else if (digit == "F"){
+                    digit = 15;
+                }
+                decimalAnswer += digit*(16**i)
+            }
+            return decimalAnswer
+        }
+        function decToBin(decimalNumber){
+            var binaryAnswer = "";
+
+            while(decimalNumber > 0){
+                var remainder = decimalNumber % 2;
+                binaryAnswer += remainder;
+                decimalNumber = Math.floor(decimalNumber/2)
+            }
+
+            var binaryArray = binaryAnswer.split("");
+            binaryArray.reverse();
+            binaryAnswer = binaryArray.join("");
+
+            return binaryAnswer
+        }
+
+        function decToOct(decimalNumber){
+            var octAnswer = "";
+
+            while(decimalNumber > 0){
+                var remainder = decimalNumber % 8;
+                octAnswer += remainder;
+                decimalNumber = Math.floor(decimalNumber/8)
+            }
+
+            var octArray = octAnswer.split("");
+            octArray.reverse();
+            octAnswer = octArray.join("");
+
+            return octAnswer
+        }
+        function decToHexi(decimalNumber){
+            var hexiAnswer = "";
+
+            while(decimalNumber > 0){
+                var remainder = decimalNumber % 16;
+
+                if (remainder == 10){
+                remainder = "A";
+                }
+                else if (remainder == 11){
+                    remainder = "B";
+                }
+                else if (remainder == 12){
+                    remainder = "C";
+                }
+                else if (remainder== 13){
+                    remainder = "D";
+                }
+                else if (remainder == 14){
+                    remainder = "E";
+                }
+                else if (remainder == 15){
+                    remainder = "F";
+                }
+                hexiAnswer += remainder;
+                decimalNumber = Math.floor(decimalNumber/16)
+            }
+
+            var hexiArray = hexiAnswer.split("");
+            hexiArray.reverse();
+            hexiAnswer = hexiArray.join("");
+            
+            return hexiAnswer
+        }
+        function convert(){
+            var inputValue = document.getElementById("userInputId").value;
+            var convertedValue = document.getElementById("userOutputId").value;
+            var selectedValue = document.getElementById("idSelectBox").value;
+
+            var result;
+
+            if (selectedValue == "Base 2 to Base 10"){
+                result = binaryToDecimal(inputValue);
+                document.getElementById("userOutputId").value = result;
+            }
+
+            if (selectedValue == "Base 8 to Base 10"){
+                result = octToDecimal(inputValue);
+                document.getElementById("userOutputId").value = result;
+            }
+            if (selectedValue == "Base 16 to Base 10"){
+                result = hexiToDecimal(inputValue);
+                document.getElementById("userOutputId").value = result;
+            }
+            if (selectedValue == "Base 10 to Base 2"){
+                result = decToBin(inputValue);
+                document.getElementById("userOutputId").value = result;
+            }
+            if (selectedValue == "Base 10 to Base 8"){
+                result = decToOct(inputValue);
+                document.getElementById("userOutputId").value = result;
+            }
+            if (selectedValue == "Base 10 to Base 16"){
+                result = decToHexi(inputValue);
+                document.getElementById("userOutputId").value = result;
+            }
+        }
+
+    </script>
+    </head>
+    <body>
+        <h1>Base Converter</h1>
+        <br>
+        <img src="baseConversions.jpg">
+        <br>
+        <input type ="text" id="userInputId" placeholder="Input Value">
+        <input type ="text" id="userOutputId" placeholder="Converted Value">
+        <br><br>
+        <select id = "idSelectBox">
+            <option>Base 2 to Base 10</option>
+            <option>Base 8 to Base 10</option>
+            <option>Base 16 to Base 10</option>
+            <option>Base 10 to Base 2</option>
+            <option>Base 10 to Base 8</option>
+            <option>Base 10 to Base 16</option>
+        </select>
+        <br><br>
+        <input type = "button" value = "Convert" onclick="convert()">
+    </body>
+</html>

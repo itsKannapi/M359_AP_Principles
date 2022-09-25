@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <Title>Top 10 Random Song Generator!</Title>
+        <style>
+            h1 {
+                text-align: center;
+                color: white;
+            }
+            body {
+                text-align: center;
+                background: linear-gradient(90deg, rgba(0,200,0,1) 25%, rgba(0,100,0,1) 50%, rgba(0,200,0,1) 75%, rgba(0,100,0,1) 50%, rgba(0,200,0,1) 25%);
+                color: white;
+            }
+        </style>
+        <script>
+            //objective: user presses a button that would select a random song
+            //from spotify's top 10 most listened songs in the world depending on the genre they selected
+            var popArray = ["Levitating", "Save your Tears", "Drivers License", "Stay", "Dynamite",
+                            "MONTERO (Call be by your name)", "Smokin Out the Window", "Mood", "Kiss me More", "Peaches"];
+            var popArtistArray = ["Dua Lipa", "The Weekend ft. Ariana Grande", "Olivia Rodrigo", "The Kid Laroi w/ Justin Bieber", "BTS",
+                            "Lil Nas X", "Bruno Mars, Andersen .Paak, Silk Sonic", "24Goldn ft. ian dior", "Doja Cat ft. Sza", "Justin Bieber ft. Daniel Caesar, Giveon"];
+            var popSongMP3Array = ["levitating.mp3", "saveyourtears.mp3", "driverslicense.mp3", "stay.mp3", "dynamite.mp3",
+                            "montero.mp3", "smokingwindow.mp3", "mood.mp3", "kissmemore.mp3", "peaches.mp3"];
+
+            var rockArray = ["MAMMAMIA", "Follow You", "Wasted in LA", "The Writing on the Wall", "Shy Away",
+                            "The Philosopher", "Astronaut in the Ocean", "Seventeen Going Under", "I Get Bored", "We Got the Moves"];
+            var rockArtistArray = ["Maneskin", "Imagine Dragons", "Zach Hennesey, FXNTI, Tosh the Drummer", "Iron Maiden", "Twenty One Pilots", 
+                            "DELANILA", "Our Last Night", "Sam Fender", "DELANILA", "Eskimo Callboy"];
+            var rockSongMp3Array = ["mammamia.mp3", "followyou.mp3", "wastedLA.mp3", "writingonthewall.mp3", "shyaway.mp3",
+                            "philosopher.mp3", "astronaut.mp3", "seventeen.mp3", "bored.mp3", "themoves.mp3"];
+
+            var hiphopArray = ["Super Gremlin", "Who Want Smoke??", "2055", "Industry Baby", "Vaccine",
+                            "Street Runner", "RapStar", "Lion Eyes", "Praise God", "Sky"];         
+            var hipHopArtistArray = ["Kodak Black", "Nardo Wick, G Herbo, Lil Durk, 21 Savage", "Sleepy Hallow", "Lil Nax X, Jack Harlow", "NoCap1",
+                            "Rod Wave", "Polo G", "Lil Durk", "Kanye West", "Playboi Carti"];
+            var hipHopSongMp3Array = ["gremlin.mp3", "smoke.mp3", "2055", "industry.mp3", "vaccine.mp3",
+                            "street.mp3", "rapstar.mp3", "lioneyes.mp3", "praise.mp3", "sky.mp3"]
+
+            var electronicArray = ["Musician", "We Love Music", "UNISIL", "The Coming", "Microdosing",
+                            "Witness Protection", "Your Favorite Sidekick", "1", "Notice", "La Perla"];
+            var electronicArtistArray = ["Porter Robinson", "MoMA Ready", "SOPHIE", "Nice Girl", "UNIIQU3",
+                            "Suuns", "underscores/8485", "Petal Supply", "Tammy Lakkis", "Sofia Kourtesis"];
+            var electronicSongMp3Array = ["musician.mp3", "welovemusic.mp3", "unisil.mp3", "coming.mp3", "microdosing.mp3",
+                            "witness.mp3", "sidekick.mp3", "1.mp3", "notice.mp3", "oerla.mp3"];
+
+            var selectedSongArray;
+            var selectedArtistArray;
+            var selectedArrayLength;
+            var selectedSongMP3Array;
+
+            //Description: Return a random interger, n, such that min <= n <= max
+            //Citation: Mozilla Foundation, https://developer.mozilla.org/en-US/docs/Web/Javascript/Reference/Global_Objects/Math/random
+            
+            //Input/Parameters: Two floating point numbers, min and max
+            //Output Return: Returns a random interger between mix and max
+            function randomInt(min, max){
+                min = Math.ceil(min);
+                max = Math.floor(max);
+
+                return Math.floor(Math.random() * (max - min + 1)) + min; //inclusive on min and max
+            }
+            //this function gets the mp3 whatever randomized song selected
+            
+            //task (urgent): need to find a way equal the two song and artist arrays
+            function getSong(){
+                //if person selects *genre*, a random song from that genres array would be selected.
+                // when selected, the text will say: This is the top __ song written by *artist*
+                var selectedValue = document.getElementById("idSelectBox").value;
+                var songRanking = "";
+                var songArtist = "";
+                var randomSong;
+                var randomArtist;
+                var randomSongMp3;
+                var result;
+                
+                if (selectedValue == "Hip Hop"){
+                    selectedSongArray = hiphopArray;
+                    selectedArtistArray = hipHopArtistArray;
+                    selectedArrayLength = hiphopArray.length;
+                    var randomValue = randomInt(0, selectedArrayLength - 1);
+
+                    randomSong = hiphopArray[randomValue];
+                    console.log(randomSong)
+                    randomArtist = hipHopArtistArray[randomValue];
+                    console.log(randomArtist)
+                    randomSongMp3 = popSongMP3Array[randomValue];
+                    console.log(randomSongMp3)
+
+                    var audio = new Audio(randomSongMp3);
+                    audio.pause();
+                    audio.play();
+                    result = "The song: " + randomSong + " written by " + randomArtist + "  ended up on the top 10 this year, enjoy!";
+                    console.log(result)
+                    document.getElementById("songNameandAuthor").innerHTML = result;
+                }
+                if (selectedValue == "Pop"){
+                    selectedSongArray = popArray;
+                    selectedArtistArray = popArtistArray;
+                    selectedSongMP3Array = popSongMP3Array;
+                    selectedArrayLength = popArray.length;
+
+                    var randomValue = randomInt(0, selectedArrayLength - 1);
+
+                    randomSong = popArray[randomValue];
+                    console.log(randomSong)
+                    randomArtist = popArtistArray[randomValue];
+                    console.log(randomArtist)
+                    randomSongMp3 = popSongMP3Array[randomValue];
+                    console.log(randomSongMp3)
+
+                    var audio = new Audio(randomSongMp3);
+                    audio.pause();
+                    audio.play();
+                    result = "The song: " + randomSong + " written by " + randomArtist + "  ended up on the top 10 this year, enjoy!";
+                    console.log(result)
+                    document.getElementById("songNameandAuthor").innerHTML = result;
+                }
+                if (selectedValue == "Rock"){
+                    selectedSongArray = rockArray;
+                    selectedArtistArray = rockArtistArray;
+                    selectedArrayLength = rockArray.length;
+
+                    var randomValue = randomInt(0, selectedArrayLength - 1);
+
+                    randomSong = rockArray[randomValue];
+                    console.log(randomSong)
+                    randomArtist = rockArtistArray[randomValue];
+                    console.log(randomArtist)
+                    randomSongMp3 = popSongMP3Array[randomValue];
+                    console.log(randomSongMp3)
+
+                    var audio = new Audio(randomSongMp3);
+                    audio.pause();
+                    audio.play();
+                    result = "The song: " + randomSong + " written by " + randomArtist + "  ended up on the top 10 this year, enjoy!";
+                    console.log(result)
+                    document.getElementById("songNameandAuthor").innerHTML = result;
+                }
+                if (selectedValue == "Electronic"){
+                    selectedSongArray = electronicArray;
+                    selectedArtistArray = electronicArtistArray;
+                    selectedArrayLength = electronicArray.length;
+
+                    var randomValue = randomInt(0, selectedArrayLength - 1);
+
+                    randomSong = electronicArray[randomValue];
+                    console.log(randomSong)
+                    randomArtist = electronicArtistArray[randomValue];
+                    console.log(randomArtist)
+                    randomSongMp3 = popSongMP3Array[randomValue];
+                    console.log(randomSongMp3)
+
+                    var audio = new Audio(randomSongMp3);
+                    audio.play();
+                    result = "The song: " + randomSong + " written by " + randomArtist + "  ended up on the top 10 this year, enjoy!";
+                    console.log(result)
+                    document.getElementById("songNameandAuthor").innerHTML = result;
+                }
+            }
+            function getMusicMP3(){
+
+            }
+
+
+        </script>
+    </head>
+    <body>
+        <h1>Top 10 Song Generator!</h1>
+        <br><br>
+        Hello! This program will help you find new artists by randomly selecting one of most listened <br>
+        artists around the world. Now go pick your genre and go find your new favorite artist! Happy Listening! <br>
+        Click the "Get Song Button" to get a random song in the selected genre, or click "Get Another Song" to get <br>
+        another song in the same genre
+        <br><br>
+        <img src="spotifylogo.jpg" width=400 height=300>
+        <br><br>
+        <select id = "idSelectBox">
+            <option>Hip Hop</option>
+            <option>Pop</option>
+            <option>Rock</option>
+            <option>Electronic</option>
+        </select>
+        <br><br>
+        <Input type = "button" value = "Get Song" onClick=getSong()><br><br>
+        <br><br>
+        <Input type = "button" value = "Stop Song" onClick=pauseSong()><br><br>
+        <br><br>
+        <div id = "idSongOutput"></div>
+        <br><br>
+        <div id = "songNameandAuthor"></div>
+        <br><br>
+    </body>
+</html>

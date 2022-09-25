@@ -1,0 +1,114 @@
+<html>
+    <head>
+        <Title> Binary ASCII to String </Title>
+    <style>
+        body {
+            text-align: center;
+            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(121,9,9,1) 44%, rgba(0,212,255,1) 100%);
+            color: white
+            
+        }
+    </style>
+    <script>
+        var decimalAnswer;
+
+        function binaryToDecimal(binaryNumber){
+            decimalAnswer = 0;
+
+            var binaryString = String(binaryNumber);
+            var binaryArray = binaryNumber.split("");
+            binaryArray.reverse();
+
+            for(var i = 0; i < binaryArray.length; i++){
+                var digit = Number(binaryArray[i]);
+                decimalAnswer += digit*(2**i)
+            }
+            return decimalAnswer
+        }
+
+        function decToBin(decimalNumber){
+            var binaryAnswer = "";
+
+            while(decimalNumber > 0){
+                var remainder = decimalNumber % 2;
+                binaryAnswer += remainder;
+                decimalNumber = Math.floor(decimalNumber/2)
+            }
+
+            var binaryArray = binaryAnswer.split("");
+            binaryArray.reverse();
+            binaryAnswer = binaryArray.join("");
+
+            return binaryAnswer
+        }
+        function convertToBinaryASCII (stringInput){
+            var stringArray = stringInput.split("");
+            var stringLength = stringArray.length
+            var binaryOutput = "";
+
+            for (var i = 0; i < stringLength; i++){
+                var character = stringArray[i];
+                character = character.charCodeAt(0);
+
+                var binaryInteger = decToBin(character);
+
+                while (binaryInteger.length < 8){
+                    binaryInteger = "0" + binaryInteger;
+                }
+                binaryOutput += " " + binaryInteger
+            }
+            return binaryOutput
+            console.log(binaryOutput)
+        }
+        function convertToString(binaryInput){
+            var binaryArray = binaryInput.split(" ");
+            var arrayLength = binaryArray.length;
+
+            var stringOutput = "";
+            for (var i = 0; i < arrayLength; i++){
+                var character = binaryArray[i];
+                character =  binaryToDecimal(character);
+
+                character = String.fromCharCode(character);
+
+                stringOutput += character;
+            }
+
+            return stringOutput
+        }
+        function displayOutput(){
+            var inputValue = document.getElementById("userInputId").value;
+            var selectedValue = document.getElementById("idSelectBox").value;
+            
+            var result ="";
+
+            if (selectedValue == "String to Binary"){
+                result = convertToBinaryASCII(inputValue);
+                console.log(result)
+                document.getElementById("outputIdAnswer").innerHTML = result;
+            }
+            else if (selectedValue == "Binary to String"){
+                result = convertToString(inputValue);
+                document.getElementById("outputIdAnswer").innerHTML = result;
+            }
+        }
+    </script>
+    </head>
+    <body>
+        <h1>ASCII Header</h1>
+
+        Convert between binary and string representations of ASCII
+        <br><br>
+        <Input type = "text" id="userInputId" style="height:150px; width: 400;" placeholder="Input goes here (ASCII expressed either as binary or a string)">
+        <br><br>
+        <select id = "idSelectBox">
+            <option>String to Binary</option>
+            <option>Binary to String</option>
+        </select>
+        <br><br>
+        <Input type = "button" value = "Convert" onClick=displayOutput()>
+        <br><br>
+        <br><br>
+        <div id = "outputIdAnswer"></div>
+    </body>
+</html>
